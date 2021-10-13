@@ -4,6 +4,7 @@ import sqlite3
 
 
 client = telebot.TeleBot('2083903747:AAGTeoLnDe5c-IybyKoVZMRJKli5CCd2AX0');
+bot_url= 'https://git.heroku.com/botstirka.git'
 
 conn = sqlite3.connect('K:\SQL Lite\BotDB.db', check_same_thread=False)
 cursor = conn.cursor()
