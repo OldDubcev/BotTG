@@ -6,41 +6,41 @@ from flask import Flask, request
 
 TOKEN = '2083903747:AAGTeoLnDe5c-IybyKoVZMRJKli5CCd2AX0'
 APP_URL = f'https://botstiralka.herokuapp.com/{TOKEN}'
-client = telebot.TeleBot(TOKEN)
+bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 
 
-@client.message_handler(commands=['start'])
+@bot.message_handler(commands=['start'])
 def start(message):
     rmk = types.ReplyKeyboardMarkup()
     rmk.add(types.KeyboardButton('Машинка 1'), types.KeyboardButton('Машинка 2'), types.KeyboardButton('Машинка 3'), types.KeyboardButton('Машинка 4'))
     
-    msg = client.send_message(message.chat.id, 'Привет, {0.first_name}, выбери номер машинки.'.format(message.from_user), reply_markup=rmk)
-    client.register_next_step_handler(msg, user_answer)
+    msg = bot.send_message(message.chat.id, 'Привет, {0.first_name}, выбери номер машинки.'.format(message.from_user), reply_markup=rmk)
+    bot.register_next_step_handler(msg, user_answer)
     
 def user_answer(message):
     rmk1 = types.ReplyKeyboardMarkup()
     rmk1.add(types.KeyboardButton('45'), types.KeyboardButton('60'))
     
     if message.text == 'Машинка 1':
-        msg = client.send_message(message.chat.id, 'Машинка 1. Выбери температурный режим', reply_markup=rmk1)
-        client.register_next_step_handler(msg, mode_machine)
+        msg = bot.send_message(message.chat.id, 'Машинка 1. Выбери температурный режим', reply_markup=rmk1)
+        bot.register_next_step_handler(msg, mode_machine)
         
         
     elif message.text == 'Машинка 2':
-        msg = client.send_message(message.chat.id, 'Машинка 2. Выбери температурный режим', reply_markup=rmk1)
-        client.register_next_step_handler(msg, mode_machine)
+        msg = bot.send_message(message.chat.id, 'Машинка 2. Выбери температурный режим', reply_markup=rmk1)
+        bot.register_next_step_handler(msg, mode_machine)
         
         
         
     elif message.text == 'Машинка 3':
-        msg = client.send_message(message.chat.id, 'Машинка 3. Выбери температурный режим', reply_markup=rmk1)
-        client.register_next_step_handler(msg, mode_machine)
+        msg = bot.send_message(message.chat.id, 'Машинка 3. Выбери температурный режим', reply_markup=rmk1)
+        bot.register_next_step_handler(msg, mode_machine)
         
         
     elif message.text == 'Машинка 4':
-        msg = client.send_message(message.chat.id, 'Машинка 4. Выбери температурный режим', reply_markup=rmk1)
-        client.register_next_step_handler(msg, mode_machine)
+        msg = bot.send_message(message.chat.id, 'Машинка 4. Выбери температурный режим', reply_markup=rmk1)
+        bot.register_next_step_handler(msg, mode_machine)
         
        
         
@@ -50,30 +50,30 @@ def mode_machine(message):
     rmk2.add(types.KeyboardButton('Начать стирку'))
     
     if message.text == '45':
-        msg = client.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
-        client.register_next_step_handler(msg, change_status)
+        msg = bot.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
+        bot.register_next_step_handler(msg, change_status)
     elif message.text == '60':
-        msg = client.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
-        client.register_next_step_handler(msg, change_status)
+        msg = bot.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
+        bot.register_next_step_handler(msg, change_status)
 
 def change_status(message):
     rmk3 = types.ReplyKeyboardMarkup()
     rmk3.add(types.KeyboardButton('Открыть машинку'))
-    client.send_message(message.chat.id, 'Стирка окончена, открой машинку!', reply_markup=rmk3)
+    bot.send_message(message.chat.id, 'Стирка окончена, открой машинку!', reply_markup=rmk3)
 
 
 @server.route('/' + TOKEN, methods=['POST'])
 def get_message():
     json_string = request.get_data().decode('utf-8')
     update = telebot.types.Update.de_json(json_string)
-    client.process_new_updates([update])
+    bot.process_new_updates([update])
     return '!', 200
 
 
 @server.route('/')
 def webhook():
-    client.remove_webhook()
-    client.set_webhook(url=APP_URL)
+    bot.remove_webhook()
+    bot.set_webhook(url=APP_URL)
     return '!', 200
 
 
