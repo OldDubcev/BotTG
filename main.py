@@ -1,6 +1,5 @@
-import telebot
-from telebot import types
 import os
+import telebot
 from flask import Flask, request
 
 TOKEN = '2083903747:AAGTeoLnDe5c-IybyKoVZMRJKli5CCd2AX0'
@@ -11,54 +10,12 @@ server = Flask(__name__)
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    rmk = types.ReplyKeyboardMarkup()
-    rmk.add(types.KeyboardButton('Машинка 1'), types.KeyboardButton('Машинка 2'), types.KeyboardButton('Машинка 3'), types.KeyboardButton('Машинка 4'))
-    
-    msg = bot.send_message(message.chat.id, 'Привет, {0.first_name}, выбери номер машинки.'.format(message.from_user), reply_markup=rmk)
-    bot.register_next_step_handler(msg, user_answer)
-    
-def user_answer(message):
-    rmk1 = types.ReplyKeyboardMarkup()
-    rmk1.add(types.KeyboardButton('45'), types.KeyboardButton('60'))
-    
-    if message.text == 'Машинка 1':
-        msg = bot.send_message(message.chat.id, 'Машинка 1. Выбери температурный режим', reply_markup=rmk1)
-        bot.register_next_step_handler(msg, mode_machine)
-        
-        
-    elif message.text == 'Машинка 2':
-        msg = bot.send_message(message.chat.id, 'Машинка 2. Выбери температурный режим', reply_markup=rmk1)
-        bot.register_next_step_handler(msg, mode_machine)
-        
-        
-        
-    elif message.text == 'Машинка 3':
-        msg = bot.send_message(message.chat.id, 'Машинка 3. Выбери температурный режим', reply_markup=rmk1)
-        bot.register_next_step_handler(msg, mode_machine)
-        
-        
-    elif message.text == 'Машинка 4':
-        msg = bot.send_message(message.chat.id, 'Машинка 4. Выбери температурный режим', reply_markup=rmk1)
-        bot.register_next_step_handler(msg, mode_machine)
-        
-       
-        
+    bot.reply_to(message, 'Hello, ' + message.from_user.first_name)
 
-def mode_machine(message):
-    rmk2 = types.ReplyKeyboardMarkup()
-    rmk2.add(types.KeyboardButton('Начать стирку'))
-    
-    if message.text == '45':
-        msg = bot.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
-        bot.register_next_step_handler(msg, change_status)
-    elif message.text == '60':
-        msg = bot.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
-        bot.register_next_step_handler(msg, change_status)
 
-def change_status(message):
-    rmk3 = types.ReplyKeyboardMarkup()
-    rmk3.add(types.KeyboardButton('Открыть машинку'))
-    bot.send_message(message.chat.id, 'Стирка окончена, открой машинку!', reply_markup=rmk3)
+@bot.message_handler(func=lambda message: True, content_types=['text'])
+def echo(message):
+    bot.reply_to(message, message.text)
 
 
 @server.route('/' + TOKEN, methods=['POST'])
