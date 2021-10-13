@@ -1,6 +1,7 @@
 import telebot
 from telebot import types
 import sqlite3
+import os
 from flask import Flask, request
 
 TOKEN = '2083903747:AAGTeoLnDe5c-IybyKoVZMRJKli5CCd2AX0'
@@ -80,10 +81,10 @@ def mode_machine(message):
     
     if message.text == '45':
         msg = client.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
-        client.register_next_step_handler(msg, change_status, set_timer)
+        client.register_next_step_handler(msg, change_status)
     elif message.text == '60':
         msg = client.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
-        client.register_next_step_handler(msg, change_status, set_timer)
+        client.register_next_step_handler(msg, change_status)
 
 def change_status(message):
     rmk3 = types.ReplyKeyboardMarkup()
