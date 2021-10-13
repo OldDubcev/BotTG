@@ -1,6 +1,7 @@
 import telebot
 from telebot import types
 import sqlite3
+from flask import Flask, request
 
 TOKEN = '2083903747:AAGTeoLnDe5c-IybyKoVZMRJKli5CCd2AX0'
 APP_URL = f'https://botstirka.herokuapp.com/{TOKEN}'
