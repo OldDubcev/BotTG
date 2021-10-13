@@ -5,7 +5,7 @@ import os
 from flask import Flask, request
 
 TOKEN = '2083903747:AAGTeoLnDe5c-IybyKoVZMRJKli5CCd2AX0'
-APP_URL = f'https://botstirka.herokuapp.com/{TOKEN}'
+APP_URL = f'https://botstiralka.herokuapp.com/{TOKEN}'
 client = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 
