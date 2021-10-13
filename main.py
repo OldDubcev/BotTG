@@ -9,14 +9,6 @@ APP_URL = f'https://botstiralka.herokuapp.com/{TOKEN}'
 client = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 
-conn = sqlite3.connect('K:\SQL Lite\BotDB.db', check_same_thread=False)
-cursor = conn.cursor()
-
-
-def db_table_val(user_id: int, user_name: str, machine_id: str, machine_status: str):
-	cursor.execute('INSERT INTO General (user_id, user_name, machine_id, machine_status) VALUES (?, ?, ?, ?)', (user_id, user_name, machine_id, machine_status))
-	conn.commit()
-
 
 @client.message_handler(commands=['start'])
 def start(message):
@@ -34,45 +26,23 @@ def user_answer(message):
         msg = client.send_message(message.chat.id, 'Машинка 1. Выбери температурный режим', reply_markup=rmk1)
         client.register_next_step_handler(msg, mode_machine)
         
-        #ЗАПИСЬ В БД
-        us_id = message.from_user.id
-        us_name = message.from_user.first_name
-        mach_id = 1
-        mach_stat = 0
-        db_table_val(user_id=us_id, user_name=us_name, machine_id=mach_id, machine_status=mach_stat)
         
     elif message.text == 'Машинка 2':
         msg = client.send_message(message.chat.id, 'Машинка 2. Выбери температурный режим', reply_markup=rmk1)
         client.register_next_step_handler(msg, mode_machine)
         
-        #ЗАПИСЬ В БД
-        us_id = message.from_user.id
-        us_name = message.from_user.first_name
-        mach_id = 2
-        mach_stat = 0
-        db_table_val(user_id=us_id, user_name=us_name, machine_id=mach_id, machine_status=mach_stat)
+        
         
     elif message.text == 'Машинка 3':
         msg = client.send_message(message.chat.id, 'Машинка 3. Выбери температурный режим', reply_markup=rmk1)
         client.register_next_step_handler(msg, mode_machine)
         
-        #ЗАПИСЬ В БД
-        us_id = message.from_user.id
-        us_name = message.from_user.first_name
-        mach_id = 3
-        mach_stat = 0
-        db_table_val(user_id=us_id, user_name=us_name, machine_id=mach_id, machine_status=mach_stat)
         
     elif message.text == 'Машинка 4':
         msg = client.send_message(message.chat.id, 'Машинка 4. Выбери температурный режим', reply_markup=rmk1)
         client.register_next_step_handler(msg, mode_machine)
         
-        #ЗАПИСЬ В БД
-        us_id = message.from_user.id
-        us_name = message.from_user.first_name
-        mach_id = 4
-        mach_stat = 0
-        db_table_val(user_id=us_id, user_name=us_name, machine_id=mach_id, machine_status=mach_stat)
+       
         
 
 def mode_machine(message):
@@ -90,11 +60,6 @@ def change_status(message):
     rmk3 = types.ReplyKeyboardMarkup()
     rmk3.add(types.KeyboardButton('Открыть машинку'))
     client.send_message(message.chat.id, 'Стирка окончена, открой машинку!', reply_markup=rmk3)
-    us_id = message.from_user.id
-    us_name = message.from_user.first_name
-    mach_id = 2
-    mach_stat = 1
-    db_table_val(user_id=us_id, user_name=us_name, machine_id=mach_id, machine_status=mach_stat)
 
 
 @server.route('/' + TOKEN, methods=['POST'])
