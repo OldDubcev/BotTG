@@ -29,7 +29,8 @@ class BD:
             cur = conn.cursor()
             version = cur.fetchone()
             # execute a statement
-            cur.execute("UPDATE mechanic SET machine_status = ? WHERE machine_id = 2", (machine_status, machine_id))
+            txt2 = "UPDATE mechanic SET machine_status = {1} WHERE machine_id = {1}".format(machine_status,machine_id)
+            cur.execute(txt2)
             # display the PostgreSQL database server version
             # close the communication with the PostgreSQL
             cur.close()
