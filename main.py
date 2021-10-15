@@ -24,31 +24,36 @@ def user_answer(message):
     rmk1.add(types.KeyboardButton('45'), types.KeyboardButton('60'))
     
     if message.text == 'Машинка 1':
+        id=1
         msg = bot.send_message(message.chat.id, 'Машинка 1. Выбери температурный режим', reply_markup=rmk1)
-        bot.register_next_step_handler(msg, mode_machine)
-        
-    elif message.text == 'Машинка 2':
-        msg = bot.send_message(message.chat.id, 'Машинка 2. Выбери температурный режим', reply_markup=rmk1)
-        bot.register_next_step_handler(msg, mode_machine)
-        
-    elif message.text == 'Машинка 3':
-        msg = bot.send_message(message.chat.id, 'Машинка 3. Выбери температурный режим', reply_markup=rmk1)
-        bot.register_next_step_handler(msg, mode_machine)
-        
-    elif message.text == 'Машинка 4':
-        msg = bot.send_message(message.chat.id, 'Машинка 4. Выбери температурный режим', reply_markup=rmk1)
-        bot.register_next_step_handler(msg, mode_machine)
-        
+        bot.register_next_step_handler(msg, id, mode_machine)
 
-def mode_machine(message):
+    elif message.text == 'Машинка 2':
+        id=2
+        msg = bot.send_message(message.chat.id, 'Машинка 2. Выбери температурный режим', reply_markup=rmk1)
+        bot.register_next_step_handler(msg, id, mode_machine)
+
+    elif message.text == 'Машинка 3':
+        id=3
+        msg = bot.send_message(message.chat.id, 'Машинка 3. Выбери температурный режим', reply_markup=rmk1)
+        bot.register_next_step_handler(msg, id, mode_machine)
+
+    elif message.text == 'Машинка 4':
+        id=4
+        msg = bot.send_message(message.chat.id, 'Машинка 4. Выбери температурный режим', reply_markup=rmk1)
+        bot.register_next_step_handler(msg, id, mode_machine)
+
+
+def mode_machine(message,id):
     rmk2 = types.ReplyKeyboardMarkup()
     rmk2.add(types.KeyboardButton('Начать стирку'))
     if message.text == '45':
         bot.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
-        db.update_status(False, 4)
+        db.update_status(False, id)
     elif message.text == '60':
         bot.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
-        db.update_status(False, 4)
+        db.update_status(False, id)
+
 
 
 
