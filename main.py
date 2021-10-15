@@ -45,8 +45,10 @@ def mode_machine(message):
     rmk2.add(types.KeyboardButton('Начать стирку'))
     if message.text == '45':
         msg = bot.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
+        db.update_status(message.from_user.id, False)
     elif message.text == '60':
         msg = bot.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
+        db.update_status(message.from_user.id, False)
 
 
 
