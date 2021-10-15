@@ -27,7 +27,6 @@ class BD:
                                     database='d7hh2s3obincbl')
             # create a cursor
             cur = conn.cursor()
-            version = cur.fetchone()
             # execute a statement
             #txt2 = "UPDATE mechanic SET machine_status = {0} WHERE machine_id = {1}".format(machine_status,machine_id)
             txt2 = "UPDATE mechanic SET machine_status = {0} WHERE machine_id = {1}".format(machine_status,machine_id)
