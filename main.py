@@ -11,23 +11,20 @@ APP_URL = f'https://botstiralka.herokuapp.com/{TOKEN}'
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 
-
-# connect to exist database
-connection = psycopg2.connect(
+#connect to exist database
+conn = psycopg2.connect(
     host=host,
     user=user,
     password=password,
-    database=db_name    
+    database=db_name
     )
-connection.autocommit = True
-    
-    # the cursor for perfoming database operations
-    # cursor = connection.cursor()
+
+cursor = conn.cursor()
+
+
 def db_table_val(machine_id: str, machine_status: str):
-    connection.cursor() as cursor:
-        cursor.execute(
-            'INSERT INTO machine (machine_id, machine_status) VALUES (?, ?)', (machine_id, machine_status)
-    )
+	cursor.execute('INSERT INTO machine (machine_id, machine_status) VALUES (?, ?);', (machine_id, machine_status))
+	conn.commit()
 
 
 @bot.message_handler(commands=['start'])
