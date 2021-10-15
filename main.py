@@ -46,13 +46,10 @@ def mode_machine(message):
     if message.text == '45':
         msg = bot.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
         db.update_status(message.from_user.id, False)
-        msg =   bot.send_message(message.chat.id,db.Error, reply_markup=rmk2)
-        bot.send_message(message.chat.id,db.version, reply_markup=rmk2)
+
     elif message.text == '60':
         msg = bot.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
         db.update_status(message.from_user.id, False)
-        msg =   bot.send_message(message.chat.id,db.Error, reply_markup=rmk2)
-        bot.send_message(message.chat.id,db.version, reply_markup=rmk2)
 
 
 
