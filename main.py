@@ -8,14 +8,14 @@ TOKEN = '2083903747:AAGTeoLnDe5c-IybyKoVZMRJKli5CCd2AX0'
 APP_URL = f'https://botstiralka.herokuapp.com/{TOKEN}'
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
-
+id = 0
 db = BD()
 
 @bot.message_handler(commands=['start'])
 def start(message):
     rmk = types.ReplyKeyboardMarkup()
     rmk.add(types.KeyboardButton('Машинка 1'), types.KeyboardButton('Машинка 2'), types.KeyboardButton('Машинка 3'), types.KeyboardButton('Машинка 4'))
-    id = 0
+
     msg = bot.send_message(message.chat.id, 'Привет, {0.first_name}, выбери номер машинки.'.format(message.from_user), reply_markup=rmk)
     bot.register_next_step_handler(msg, user_answer)
     
