@@ -21,10 +21,9 @@ connection = psycopg2.connect(
 
 cursor = connection.cursor()
 
-def db_table_val:
+def db_table_val(machine_id: str, machine_status: str):
 	cursor.execute('INSERT INTO machine (machine_id, machine_status) VALUES (?, ?)', (machine_id, machine_status))
 	connection.commit()
-
 
 @bot.message_handler(commands=['start'])
 def start(message):
