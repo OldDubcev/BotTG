@@ -21,30 +21,26 @@ def start(message):
     bot.register_next_step_handler(msg, user_answer)
    
 def user_answer(message):
-    
+    global id
     rmk1 = types.ReplyKeyboardMarkup()
     rmk1.add(types.KeyboardButton('45'), types.KeyboardButton('60'))
     
     if message.text == 'Машинка 1':
-        global id
         id = 1
         msg = bot.send_message(message.chat.id, 'Машинка 1. Выбери температурный режим', reply_markup=rmk1)
         bot.register_next_step_handler(msg, mode_machine)
 
     elif message.text == 'Машинка 2':
-        global id
         id = 2
         msg = bot.send_message(message.chat.id, 'Машинка 2. Выбери температурный режим', reply_markup=rmk1)
         bot.register_next_step_handler(msg, mode_machine)
 
     elif message.text == 'Машинка 3':
-        global id
         id = 3
         msg = bot.send_message(message.chat.id, 'Машинка 3. Выбери температурный режим', reply_markup=rmk1)
         bot.register_next_step_handler(msg, mode_machine)
 
     elif message.text == 'Машинка 4':
-        global id
         id = 4
         msg = bot.send_message(message.chat.id, 'Машинка 4. Выбери температурный режим', reply_markup=rmk1)
         bot.register_next_step_handler(msg, mode_machine)
