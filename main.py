@@ -8,8 +8,9 @@ TOKEN = '2083903747:AAGTeoLnDe5c-IybyKoVZMRJKli5CCd2AX0'
 APP_URL = f'https://botstiralka.herokuapp.com/{TOKEN}'
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
-id = 0
 db = BD()
+
+id=0
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -18,36 +19,38 @@ def start(message):
 
     msg = bot.send_message(message.chat.id, 'Привет, {0.first_name}, выбери номер машинки.'.format(message.from_user), reply_markup=rmk)
     bot.register_next_step_handler(msg, user_answer)
-    
+   
 def user_answer(message):
     
     rmk1 = types.ReplyKeyboardMarkup()
     rmk1.add(types.KeyboardButton('45'), types.KeyboardButton('60'))
     
     if message.text == 'Машинка 1':
-        bot.reply_to(message, id)
+        global id
         id = 1
         msg = bot.send_message(message.chat.id, 'Машинка 1. Выбери температурный режим', reply_markup=rmk1)
         bot.register_next_step_handler(msg, mode_machine)
 
     elif message.text == 'Машинка 2':
+        global id
         id = 2
         msg = bot.send_message(message.chat.id, 'Машинка 2. Выбери температурный режим', reply_markup=rmk1)
         bot.register_next_step_handler(msg, mode_machine)
 
     elif message.text == 'Машинка 3':
+        global id
         id = 3
         msg = bot.send_message(message.chat.id, 'Машинка 3. Выбери температурный режим', reply_markup=rmk1)
         bot.register_next_step_handler(msg, mode_machine)
 
     elif message.text == 'Машинка 4':
+        global id
         id = 4
         msg = bot.send_message(message.chat.id, 'Машинка 4. Выбери температурный режим', reply_markup=rmk1)
         bot.register_next_step_handler(msg, mode_machine)
 
 
 def mode_machine(message):
-    bot.reply_to(message, id)
     rmk2 = types.ReplyKeyboardMarkup()
     rmk2.add(types.KeyboardButton('Начать стирку'))
     if message.text == '45':
