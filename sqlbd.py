@@ -1,8 +1,14 @@
 import psycopg2
 
+db = BD
+db.host
+
 
 class BD:
-    def init(self):
+
+    def init(self, Error=None, version=None):
+        Error
+        version
         self.connection = psycopg2.connect(
             host='ec2-54-228-139-34.eu-west-1.compute.amazonaws.com',
             user='jijysackpahqwk',
@@ -25,14 +31,14 @@ class BD:
 
         # create a cursor
         cur = conn.cursor()
-
+        version = cur.fetchone()
         # execute a statement
         cur.execute("UPDATE mechanic SET machine_status = ? WHERE machine_id = 2", (machine_status, machine_id))
         # display the PostgreSQL database server version
         # close the communication with the PostgreSQL
         cur.close()
     except (Exception, psycopg2.DatabaseError) as error:
-        da = 0
+        Error = error
     finally:
         if conn is not None:
             conn.close()
