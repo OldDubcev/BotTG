@@ -20,10 +20,12 @@ def start(message):
     bot.register_next_step_handler(msg, user_answer)
     
 def user_answer(message):
+    
     rmk1 = types.ReplyKeyboardMarkup()
     rmk1.add(types.KeyboardButton('45'), types.KeyboardButton('60'))
     
     if message.text == 'Машинка 1':
+        bot.reply_to(message, id)
         id = 1
         msg = bot.send_message(message.chat.id, 'Машинка 1. Выбери температурный режим', reply_markup=rmk1)
         bot.register_next_step_handler(msg, mode_machine)
@@ -45,6 +47,7 @@ def user_answer(message):
 
 
 def mode_machine(message):
+    bot.reply_to(message, id)
     rmk2 = types.ReplyKeyboardMarkup()
     rmk2.add(types.KeyboardButton('Начать стирку'))
     if message.text == '45':
