@@ -9,7 +9,7 @@ APP_URL = f'https://botstiralka.herokuapp.com/{TOKEN}'
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 
-db = BD
+db = BD()
 
 @bot.message_handler(commands=['start'])
 def start(message):
