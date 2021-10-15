@@ -1,31 +1,15 @@
 import telebot
 from telebot import types
-import psycopg2
-from config import host, user, password, db_name
 import os
 from flask import Flask, request
-
+from sqlbd import BD
 
 TOKEN = '2083903747:AAGTeoLnDe5c-IybyKoVZMRJKli5CCd2AX0'
 APP_URL = f'https://botstiralka.herokuapp.com/{TOKEN}'
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 
-#connect to exist database
-conn = psycopg2.connect(
-    host=host,
-    user=user,
-    password=password,
-    database=db_name
-    )
-
-cursor = conn.cursor()
-
-
-def db_table_val(machine_id: str, machine_status: str):
-	cursor.execute('INSERT INTO machine (machine_id, machine_status) VALUES (?, ?);', (machine_id, machine_status))
-	conn.commit()
-
+db = BD
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -43,54 +27,29 @@ def user_answer(message):
         msg = bot.send_message(message.chat.id, 'Машинка 1. Выбери температурный режим', reply_markup=rmk1)
         bot.register_next_step_handler(msg, mode_machine)
         
-        #ЗАПИСЬ В БД
-        mach_id = 1
-        mach_stat = 0
-        db_table_val(machine_id=mach_id, machine_status=mach_stat)
-        
     elif message.text == 'Машинка 2':
         msg = bot.send_message(message.chat.id, 'Машинка 2. Выбери температурный режим', reply_markup=rmk1)
         bot.register_next_step_handler(msg, mode_machine)
         
-        #ЗАПИСЬ В БД
-        mach_id = 2
-        mach_stat = 0
-        db_table_val(machine_id=mach_id, machine_status=mach_stat)
-        
-        
     elif message.text == 'Машинка 3':
         msg = bot.send_message(message.chat.id, 'Машинка 3. Выбери температурный режим', reply_markup=rmk1)
         bot.register_next_step_handler(msg, mode_machine)
-        #ЗАПИСЬ В БД
-        mach_id = 3
-        mach_stat = 0
-        db_table_val(machine_id=mach_id, machine_status=mach_stat)
         
     elif message.text == 'Машинка 4':
         msg = bot.send_message(message.chat.id, 'Машинка 4. Выбери температурный режим', reply_markup=rmk1)
         bot.register_next_step_handler(msg, mode_machine)
-        #ЗАПИСЬ В БД
-        mach_id = 1
-        mach_stat = 0
-        db_table_val(machine_id=mach_id, machine_status=mach_stat)
-       
         
 
 def mode_machine(message):
     rmk2 = types.ReplyKeyboardMarkup()
     rmk2.add(types.KeyboardButton('Начать стирку'))
-    
+    db.update_status(message.from_user.id, False)
     if message.text == '45':
         msg = bot.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
-        bot.register_next_step_handler(msg, change_status)
     elif message.text == '60':
         msg = bot.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
-        bot.register_next_step_handler(msg, change_status)
 
-def change_status(message):
-    rmk3 = types.ReplyKeyboardMarkup()
-    rmk3.add(types.KeyboardButton('Открыть машинку'))
-    bot.send_message(message.chat.id, 'Стирка окончена, открой машинку!', reply_markup=rmk3)
+
 
 
 @server.route('/' + TOKEN, methods=['POST'])
