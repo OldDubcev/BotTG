@@ -51,12 +51,12 @@ def mode_machine(message):
     rmk2.add(types.KeyboardButton('Начать стирку'))
     if message.text == '45':
         msg = bot.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
-        bot.register_next_step_handler(msg, end_machine)
         db.update_status(False, id)
+        bot.register_next_step_handler(msg, end_machine)
     elif message.text == '60':
         msg = bot.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
-        bot.register_next_step_handler(msg, end_machine)
         db.update_status(False, id)
+        bot.register_next_step_handler(msg, end_machine)
 
 def end_machine(message):
     rmk2 = types.ReplyKeyboardMarkup()
