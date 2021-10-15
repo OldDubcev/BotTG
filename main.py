@@ -1,25 +1,12 @@
-import psycopg2
 import telebot
 from telebot import types
 import os
 from flask import Flask, request
 
-
 TOKEN = '2083903747:AAGTeoLnDe5c-IybyKoVZMRJKli5CCd2AX0'
 APP_URL = f'https://botstiralka.herokuapp.com/{TOKEN}'
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
-
-
-DATABASE_URL = os.environ['postgres://rjnmasdeuyhcpn:bd504f1761418197d414f55520a7afb028eaacf0daa21da8caa8b4b7016537a6@ec2-52-210-120-210.eu-west-1.compute.amazonaws.com:5432/dfifnk8obqck38']
-
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-cursor = conn.cursor()
-
-def db_table_val( machine_id: str, machine_status: str):
-	cursor.execute('INSERT INTO Mschine (machine_id, machine_status) VALUES (?, ?)', (machine_id, machine_status))
-	conn.commit()
-
 
 
 @bot.message_handler(commands=['start'])
@@ -37,32 +24,22 @@ def user_answer(message):
     if message.text == 'Машинка 1':
         msg = bot.send_message(message.chat.id, 'Машинка 1. Выбери температурный режим', reply_markup=rmk1)
         bot.register_next_step_handler(msg, mode_machine)
-        mach_id = 1
-        mach_stat = 0
-        db_table_val(machine_id=mach_id, machine_status=mach_stat)
         
         
     elif message.text == 'Машинка 2':
         msg = bot.send_message(message.chat.id, 'Машинка 2. Выбери температурный режим', reply_markup=rmk1)
         bot.register_next_step_handler(msg, mode_machine)
-        mach_id = 2
-        mach_stat = 0
-        db_table_val(machine_id=mach_id, machine_status=mach_stat)
+        
         
         
     elif message.text == 'Машинка 3':
         msg = bot.send_message(message.chat.id, 'Машинка 3. Выбери температурный режим', reply_markup=rmk1)
         bot.register_next_step_handler(msg, mode_machine)
-        mach_id = 3
-        mach_stat = 0
-        db_table_val(machine_id=mach_id, machine_status=mach_stat)
+        
         
     elif message.text == 'Машинка 4':
         msg = bot.send_message(message.chat.id, 'Машинка 4. Выбери температурный режим', reply_markup=rmk1)
         bot.register_next_step_handler(msg, mode_machine)
-        mach_id = 4
-        mach_stat = 0
-        db_table_val(machine_id=mach_id, machine_status=mach_stat)
         
        
         
