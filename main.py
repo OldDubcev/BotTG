@@ -11,19 +11,24 @@ APP_URL = f'https://botstiralka.herokuapp.com/{TOKEN}'
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 
-#connect to exist database
+
+# connect to exist database
 connection = psycopg2.connect(
     host=host,
     user=user,
     password=password,
-    database=db_name
+    database=db_name    
+    )
+connection.autocommit = True
+    
+    # the cursor for perfoming database operations
+    # cursor = connection.cursor()
+def db_table_val(machine_id: str, machine_status: str):
+    connection.cursor() as cursor:
+        cursor.execute(
+            'INSERT INTO machine (machine_id, machine_status) VALUES (?, ?)', (machine_id, machine_status)
     )
 
-cursor = connection.cursor()
-
-def db_table_val(machine_id: str, machine_status: str):
-	cursor.execute('INSERT INTO machine (machine_id, machine_status) VALUES (?, ?)', (machine_id, machine_status))
-	connection.commit()
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -68,7 +73,7 @@ def user_answer(message):
         msg = bot.send_message(message.chat.id, 'Машинка 4. Выбери температурный режим', reply_markup=rmk1)
         bot.register_next_step_handler(msg, mode_machine)
         #ЗАПИСЬ В БД
-        mach_id = 4
+        mach_id = 1
         mach_stat = 0
         db_table_val(machine_id=mach_id, machine_status=mach_stat)
        
