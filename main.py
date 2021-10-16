@@ -80,7 +80,7 @@ def end_machine(message):
 def query_status(message):
     if message.text == '/status':
         db.query_status(machine_status=True)
-        bot.send_message(message.chat.id, 'Список свободных машин:')
+        bot.send_message(message.chat.id, 'Список свободных машин:', query_status)
 
 @server.route('/' + TOKEN, methods=['POST'])
 def get_message():
