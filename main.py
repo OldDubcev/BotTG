@@ -22,8 +22,8 @@ def start(message: types.Message):
 
 @bot.message_handler(commands=['status'])
 def status(message: types.Message):
-    query = db.query_status()
-    bot.send_message(message.chat.id,'Свободные машинки: ', query)
+    status = db.query_status()
+    bot.send_message(status)
 
 def user_answer(message):
     global id
