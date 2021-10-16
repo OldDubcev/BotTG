@@ -12,6 +12,7 @@ db = BD()
 
 id=0
 
+
 @bot.message_handler(commands=['start'])
 def start(message):
     rmk = types.ReplyKeyboardMarkup()
@@ -19,7 +20,8 @@ def start(message):
 
     msg = bot.send_message(message.chat.id, 'Привет, {0.first_name}, выбери номер машинки.'.format(message.from_user), reply_markup=rmk)
     bot.register_next_step_handler(msg, user_answer)
-   
+
+
 def user_answer(message):
     global id
     rmk1 = types.ReplyKeyboardMarkup()
@@ -56,6 +58,9 @@ def mode_machine(message):
         msg = bot.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
         bot.register_next_step_handler(msg, status_machine)
 
+
+
+#Вот тут должен быть таймер
 def status_machine(message):
     rmk2 = types.ReplyKeyboardMarkup()
     rmk2.add(types.KeyboardButton('Открыть машинку'))
@@ -72,7 +77,10 @@ def end_machine(message):
         msg = bot.send_message(message.chat.id, 'Стирка окончена! Забери шмотки', reply_markup=rmk2)
         bot.register_next_step_handler(msg, start)
 
-
+def query_status(message):
+    if message.text == '/status':
+        db.query_status(machine_status=True)
+        bot.send_message(message.chat.id, 'Список свободных машин:'
 
 
 
