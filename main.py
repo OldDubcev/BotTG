@@ -20,11 +20,10 @@ def start(message):
     msg = bot.send_message(message.chat.id, 'Привет, {0.first_name}, выбери номер машинки.'.format(message.from_user), reply_markup=rmk)
     bot.register_next_step_handler(msg, user_answer)
 
-@bot.message_handler(content_types=['text'])
-def query (message):
-    if message.text == 'status':
-        status = db.query_status()
-        bot.send_message(message.chat.id, 'Свободные машинки:', status)
+@bot.message_handler(commands=['status'])
+def status(message: types.Message):
+    status = db.query_status()
+    bot.send_message(message.chat.id, 'Свободные машинки:', status)
 
 def user_answer(message):
     global id
