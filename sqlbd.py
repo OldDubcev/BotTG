@@ -13,16 +13,6 @@ class BD:
             database='d7hh2s3obincbl')
 
         self.cursor = self.connection.cursor()
-        self.connection.commit()
-        
-    def query_status(self, machine_status = True):
-        """ Connect to the PostgreSQL database server """
-        with self.connection:
-            # execute a statement
-            self.cursor.execute('SELECT Machine_id FROM mechanic WHERE machine_status = ?', (machine_status,))
-            return self.cursor.fetchall()
-        
-
 
     def update_status(self,machine_status, machine_id):
         """ Connect to the PostgreSQL database server """
