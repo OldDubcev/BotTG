@@ -23,7 +23,7 @@ def start(message: types.Message):
 @bot.message_handler(commands=['status'])
 def status(message: types.Message):
     status = db.query_status(True)
-    bot.send_message(status)
+    bot.send_message(message.chat.id, status)
 
 def user_answer(message):
     global id
