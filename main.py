@@ -14,7 +14,7 @@ id=0
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    rmk = types.ReplyKeyboardMarkup()
+    rmk = types.ReplyKeyboardMarkup(resize_keyboard = True)
     rmk.add(types.KeyboardButton('Машинка 1'), types.KeyboardButton('Машинка 2'), types.KeyboardButton('Машинка 3'), types.KeyboardButton('Машинка 4'))
 
     msg = bot.send_message(message.chat.id, 'Привет, {0.first_name}, выбери номер машинки.'.format(message.from_user), reply_markup=rmk)
@@ -22,7 +22,7 @@ def start(message):
    
 def user_answer(message):
     global id
-    rmk1 = types.ReplyKeyboardMarkup()
+    rmk1 = types.ReplyKeyboardMarkup(resize_keyboard = True)
     rmk1.add(types.KeyboardButton('45'), types.KeyboardButton('60'))
     
     if message.text == 'Машинка 1':
@@ -47,7 +47,7 @@ def user_answer(message):
 
 
 def mode_machine(message):
-    rmk2 = types.ReplyKeyboardMarkup()
+    rmk2 = types.ReplyKeyboardMarkup(resize_keyboard = True)
     rmk2.add(types.KeyboardButton('Начать стирку'))
     if message.text == '45':
         msg = bot.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
@@ -58,7 +58,7 @@ def mode_machine(message):
 
 #Тут должен быть таймер
 def status_machine(message):
-    rmk2 = types.ReplyKeyboardMarkup()
+    rmk2 = types.ReplyKeyboardMarkup(resize_keyboard = True)
     rmk2.add(types.KeyboardButton('Открыть машинку'))
     if message.text == 'Начать стирку':
         db.update_status(False, id)
@@ -66,7 +66,7 @@ def status_machine(message):
         bot.register_next_step_handler(msg, end_machine)
 
 def end_machine(message):
-    rmk2 = types.ReplyKeyboardMarkup()
+    rmk2 = types.ReplyKeyboardMarkup(resize_keyboard = True)
     rmk2.add(types.KeyboardButton('Начать новую стирку'))
     if message.text == 'Открыть машинку':
         db.update_status(True, id)
