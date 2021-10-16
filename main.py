@@ -13,7 +13,7 @@ db = BD()
 id=0
 
 @bot.message_handler(commands=['start'])
-def start(message):
+def start(message: types.Message):
     rmk = types.ReplyKeyboardMarkup(resize_keyboard = True)
     rmk.add(types.KeyboardButton('Машинка 1'), types.KeyboardButton('Машинка 2'), types.KeyboardButton('Машинка 3'), types.KeyboardButton('Машинка 4'))
 
