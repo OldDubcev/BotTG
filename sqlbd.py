@@ -14,7 +14,7 @@ class BD:
 
         self.cursor = self.connection.cursor()
     
-    def query_status(self, machine_status = True):
+    def query_status(self, machine_status = True ):
         conn = None
         try:
             # connect to the PostgreSQL server
@@ -26,8 +26,10 @@ class BD:
             # create a cursor
             cur = conn.cursor()
             # execute a statement
-            cur.execute("SELECT `machine_id` FROM `mechanic` WHERE `machine_status` = ?", (machine_status,)).fetchall()
-            conn.commit()
+            zap = "SELECT machine_id`FROM mechanic WHERE machine_status = {0}".format(machine_status)
+            cur.execute(zap)
+            free_stat = cur.fetchall()
+            print(free_stat)
             # display the PostgreSQL database server version
             # close the communication with the PostgreSQL
             cur.close()

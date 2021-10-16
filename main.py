@@ -22,7 +22,7 @@ def start(message: types.Message):
 
 @bot.message_handler(commands=['status'])
 def status(message: types.Message):
-    status = db.query_status()
+    status = db.query_status(True)
     bot.send_message(status)
 
 def user_answer(message):
