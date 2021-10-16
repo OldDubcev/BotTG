@@ -22,7 +22,7 @@ def start(message):
 
 @bot.message_handler(content_types=['text'])
 def query (message):
-    if message.text == '/start':
+    if message.text == 'status':
         status = db.query_status()
         bot.send_message(message.chat.id, 'Свободные машинки:', status)
 
