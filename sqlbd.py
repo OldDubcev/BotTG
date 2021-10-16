@@ -19,7 +19,7 @@ class BD:
         """ Connect to the PostgreSQL database server """
         with self.connection:
             # execute a statement
-            result = self.cursor.execute('SELECT Machine_id FROM mechanic WHERE machine_status = ?', (machine_status,))
+            self.cursor.execute('SELECT Machine_id FROM mechanic WHERE machine_status = ?', (machine_status,))
             return self.cursor.fetchall()
         
 
