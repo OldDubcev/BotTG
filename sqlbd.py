@@ -14,12 +14,13 @@ class BD:
 
         self.cursor = self.connection.cursor()
         self.connection.commit()
+        
     def query_status(self, machine_status = True):
         """ Connect to the PostgreSQL database server """
         with self.connection:
             # execute a statement
-            result = self.cursor.execute('SELECT Machine_id FROM mechanic WHERE machine_status = ?', (machine_status,)).fetchall()
-            return bool(len(result))
+            result = self.cursor.execute('SELECT Machine_id FROM mechanic WHERE machine_status = ?', (machine_status,))
+            return self.cursor.fetchall()
         
 
 

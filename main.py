@@ -71,18 +71,16 @@ def status_machine(message):
 
 def end_machine(message):
     rmk2 = types.ReplyKeyboardMarkup()
-    rmk2.add(types.KeyboardButton('Начать новую стирку'))
+    rmk2.add(types.KeyboardButton('/status'))
     if message.text == 'Открыть машинку':
         db.update_status(True, id)
         msg = bot.send_message(message.chat.id, 'Стирка окончена! Забери шмотки', reply_markup=rmk2)
-        bot.register_next_step_handler(msg, start)
+        bot.register_next_step_handler(msg, query_status)
 
 def query_status(message):
     if message.text == '/status':
         db.query_status(machine_status=True)
         bot.send_message(message.chat.id, 'Список свободных машин:')
-
-
 
 @server.route('/' + TOKEN, methods=['POST'])
 def get_message():
