@@ -61,7 +61,7 @@ def status_machine(message):
     rmk2.add(types.KeyboardButton('Открыть машинку'))
     if message.text == 'Начать стирку':
         db.update_status(False, id)
-        msg = bot.send_message(message.chat.id, 'Стирка окончена! Забери шмотки', reply_markup=rmk2)
+        msg = bot.send_message(message.chat.id, 'Стирка закончится через N минут', reply_markup=rmk2)
         bot.register_next_step_handler(msg, end_machine)
 
 def end_machine(message):
@@ -69,7 +69,7 @@ def end_machine(message):
     rmk2.add(types.KeyboardButton('Начать новую стирку'))
     if message.text == 'Открыть машинку':
         db.update_status(True, id)
-        msg = bot.send_message(message.chat.id, 'Стирка окончена! Забери шмотки')
+        msg = bot.send_message(message.chat.id, 'Стирка окончена! Забери шмотки', reply_markup=rmk2)
         bot.register_next_step_handler(msg, start)
 
 
