@@ -51,19 +51,26 @@ def mode_machine(message):
     rmk2.add(types.KeyboardButton('Начать стирку'))
     if message.text == '45':
         msg = bot.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
-        db.update_status(False, id)
-        bot.register_next_step_handler(msg, end_machine)
+        bot.register_next_step_handler(msg, status_machine)
     elif message.text == '60':
         msg = bot.send_message(message.chat.id, 'Закрой машинку и начни стирку', reply_markup=rmk2)
+        bot.register_next_step_handler(msg, status_machine)
+
+def status_machine(message):
+    rmk2 = types.ReplyKeyboardMarkup()
+    rmk2.add(types.KeyboardButton('Открыть машинку'))
+    if message.text == 'Начать стирку':
         db.update_status(False, id)
+        msg = bot.send_message(message.chat.id, 'Стирка окончена! Забери шмотки', reply_markup=rmk2)
         bot.register_next_step_handler(msg, end_machine)
 
 def end_machine(message):
     rmk2 = types.ReplyKeyboardMarkup()
-    rmk2.add(types.KeyboardButton('Открыть машинку'))
-    if message.text == 'Начать стирку':
-        msg = bot.send_message(message.chat.id, 'Стирка окончена! Забери шмотки', reply_markup=rmk2)
+    rmk2.add(types.KeyboardButton('Начать новую стирку'))
+    if message.text == 'Открыть машинку':
         db.update_status(True, id)
+        msg = bot.send_message(message.chat.id, 'Стирка окончена! Забери шмотки')
+        bot.register_next_step_handler(msg, start)
 
 
 
