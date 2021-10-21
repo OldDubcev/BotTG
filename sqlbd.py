@@ -26,7 +26,7 @@ class BD:
             # create a cursor
             cur = conn.cursor()
             # execute a statement
-            cur.execute("SELECT machine_id FROM mechanic WHERE machine_status = ?", (machine_status,)).fetchall()
+            cur.execute("SELECT machine_id FROM mechanic WHERE machine_status = ?", (machine_status,))
             results = cur.fetchall()
             # display the PostgreSQL database server version
             # close the communication with the PostgreSQL
