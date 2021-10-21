@@ -31,12 +31,12 @@ class BD:
             # display the PostgreSQL database server version
             # close the communication with the PostgreSQL
             cur.close()
+            return results
         except (Exception, psycopg2.DatabaseError) as error:
             Error = error
         finally:
             if conn is not None:
                 conn.close()
-        return results
 
     def update_status(self,machine_status, machine_id):
         """ Connect to the PostgreSQL database server """
