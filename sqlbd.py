@@ -26,9 +26,8 @@ class BD:
             # create a cursor
             cur = conn.cursor()
             # execute a statement
-            cur.execute("SELECT machine_id FROM mechanic WHERE machine_status = ?", (machine_status,))
+            cur.execute("SELECT machine_id FROM mechanic WHERE machine_status = ?", (machine_status,)).fetchall()
             results = cur.fetchall()
-            print(results)
             # display the PostgreSQL database server version
             # close the communication with the PostgreSQL
             cur.close()
@@ -37,6 +36,7 @@ class BD:
         finally:
             if conn is not None:
                 conn.close()
+        return results
 
     def update_status(self,machine_status, machine_id):
         """ Connect to the PostgreSQL database server """
