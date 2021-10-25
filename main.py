@@ -4,7 +4,7 @@ import os
 from flask import Flask, request
 from sqlbd import BD
 
-TOKEN = '2083903747:AAGTeoLnDe5c-IybyKoVZMRJKli5CCd2AX0'
+TOKEN = 'SUCK MY DICK'
 APP_URL = f'https://botstiralka.herokuapp.com/{TOKEN}'
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
